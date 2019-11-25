@@ -17,9 +17,9 @@ class CreateItemDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadData()
         nameLabel.delegate = self
         priceLabel.delegate = self
-        loadData()
         // Do any additional setup after loading the view.
     }
 
@@ -33,10 +33,18 @@ extension CreateItemDetailViewController:  UITextFieldDelegate{
         
         if textField == nameLabel{
             nameLabel.resignFirstResponder()
-            createdItem?.name = nameLabel.text
+            createdItem?.name = textField.text
         }else if textField == priceLabel{
             priceLabel.resignFirstResponder()
-            createdItem?.price = Double(priceLabel.text!)
+            createdItem?.price = Double(textField.text!)
+        }
+        return true
+    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == nameLabel{
+            createdItem?.name = textField.text
+        } else if textField == priceLabel{
+            createdItem?.price = Double(textField.text!)
         }
         return true
     }

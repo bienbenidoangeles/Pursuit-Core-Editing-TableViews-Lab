@@ -14,8 +14,8 @@ struct Item {
     var section: String
     
     static let items: [Item] = [
-        Item(name: "1", price: nil, section: "Unpurchased"),
-        Item(name: "2", price: nil, section: "Purchased")
+        Item(name: "1", price: 1.0, section: "Unpurchased"),
+        Item(name: "2", price: 2.0, section: "Purchased")
     ]
     
     static func getSections() -> [[Item]] {
