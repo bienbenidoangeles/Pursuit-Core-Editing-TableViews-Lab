@@ -12,11 +12,13 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
 
-    var groceryItems = [[Item]](){
-        didSet{
-            tableView.reloadData()
-        }
-    }
+    var groceryItems = [[Item]]()
+//    {
+//        didSet{
+//            tableView.reloadData()
+//            dump(groceryItems)
+//        }
+//    }
     
     var isEditingTableView = false {
         didSet{
@@ -40,8 +42,8 @@ class ViewController: UIViewController {
         guard let createItemVC = segue.source as? CreateItemDetailViewController, let createdItem = createItemVC.createdItem else {
             fatalError("unable to access CreateItemDVC as source")
         }
-        let indexPath = IndexPath(row: 0, section: 0)
-        groceryItems.insert([createdItem], at: 1)
+        let indexPath = IndexPath(row: 0, section: 1)
+        groceryItems[1].insert(createdItem, at: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
@@ -82,7 +84,8 @@ extension ViewController:UITableViewDataSource{
         case .insert:
             print("")
         case .delete:
-            groceryItems.remove(at: indexPath.row)
+            //dump(groceryItems)
+            groceryItems[indexPath.section].remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         default:
             print("")
@@ -92,8 +95,9 @@ extension ViewController:UITableViewDataSource{
     //reording rows in table view
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let itemToMove = groceryItems[sourceIndexPath.section][sourceIndexPath.row]
-        groceryItems.remove(at: sourceIndexPath.section)
-        groceryItems.insert([itemToMove], at: destinationIndexPath.section)
+        groceryItems[sourceIndexPath.section].remove(at: sourceIndexPath.row)
+        groceryItems[destinationIndexPath.section].insert(itemToMove, at: destinationIndexPath.row)
+        //dump(groceryItems)
     }
     
 }
